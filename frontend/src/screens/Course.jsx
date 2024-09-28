@@ -3,14 +3,24 @@ import React from 'react'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import Courses from '../components/courses'
-
+import { useAuth } from '../components/ContextApi'
+import Signup from '../components/Signup.jsx'
+import Toast from 'react-hot-toast'
 function Course() {
+  let [Auth] = useAuth();
   return (
     <>
       <NavBar />
-      <div className='min-h-screen'>
-        <Courses />
-      </div>
+      {
+        Auth ? <div className='min-h-screen'>
+          <Courses />
+        </div> :
+          <>
+            {Toast.error('Please first login to visit this Section')}
+            <Signup />
+          </>
+      }
+
       <Footer />
     </>
   )

@@ -2,8 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Login from './Login';
+import { useAuth } from './ContextApi'
+import Toast from 'react-hot-toast'
 
 function NavBar() {
+    const [Auth, setAuth] = useAuth();
     const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light');
     const element = document.documentElement;
     useEffect(() => {
@@ -51,6 +54,12 @@ function NavBar() {
     )
     const handleLogin = () => {
         document.getElementById('my_modal_3').showModal();
+    }
+    console.log(Auth)
+    const handleLogout = () => {
+        setAuth(undefined);
+        localStorage.removeItem('AuthToken');
+        Toast.success('Logged Out!')
     }
     return (
         <>
@@ -105,7 +114,7 @@ function NavBar() {
                         <div>
                             <label className="swap swap-rotate">
                                 {/* this hidden checkbox controls the state */}
-                                
+
                                 <input type="checkbox" className="theme-controller" value="synthwave" />
 
                                 {/* sun icon */}
@@ -127,10 +136,25 @@ function NavBar() {
                                 </svg>
                             </label>
                         </div>
-                        <div className="" onClick={handleLogin}>
-                            <a className="text-white bg-black px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer">Login</a>
-                            <Login />
-                        </div>
+                        {
+                            Auth ?
+                                <div onClick={handleLogout}>
+                                    <Link className="text-white bg-red-600 px-3 py-2 rounded-md hover:bg-red-700 duration-300 cursor-pointer"
+                                    >
+                                        Logout
+                                    </Link>
+                                </div>
+                                :
+                                <>  <div onClick={handleLogin}>
+                                    <a className="text-white bg-black px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer">Login</a>
+                                    <Login />
+                                </div>
+                                    <div>
+                                        <Link className="text-white bg-black px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer" to='/signup'>
+                                            SignUp
+                                        </Link>
+                                    </div> </>
+                        }
                     </div>
                 </div>
             </div>

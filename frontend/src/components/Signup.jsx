@@ -1,11 +1,15 @@
 
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Login from './Login'
 import { useForm } from "react-hook-form"
-
+import axios from 'axios'
+import Toast from 'react-hot-toast'
+import { useAuth } from './ContextApi'
 
 function Signup() {
+    let [Auth, setAuth] = useAuth();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -15,8 +19,25 @@ function Signup() {
     const handleLogin = () => {
         document.getElementById('my_modal_3').showModal();
     }
+    
 
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            const resSignup = await axios.post('http://localhost:4001/user/signup', data);
+            console.log(resSignup.data.success);
+            if (resSignup.data) {
+                Toast.success('Successfully SignUp')
+                navigate('/');
+                console.log(resSignup.data.AuthToken)
+                setAuth(resSignup.data.AuthToken);
+                localStorage.setItem('AuthToken', Auth)
+            }
+        }
+        catch (e) {
+            console.log(e.response.data.error);
+            Toast.error('Error ' + e.response.data.error);
+        }
+    }
 
     return (
         <>
@@ -48,6 +69,7 @@ function Signup() {
                             {errors.password && <span className='text-sm text-red-500'>This field is required</span>}
                         </div>
                         <div className='flex justify-around mt-4'>
+
                             <button className='bg-pink-500 text-white px-3 py-1 hover:bg-pink-700 duration-300 rounded-md'>
                                 Signup
                             </button>
