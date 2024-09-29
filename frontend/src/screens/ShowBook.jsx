@@ -10,7 +10,7 @@ function ShowBook() {
     let id = routeParams.id;
     const getBook = async () => {
         try {
-            let Book = await axios.get(`http://localhost:4001/book/${id}`);
+            let Book = await axios.get(`https://bookstore-fullstack-project.onrender.com/book/${id}`);
             setSingleBook(Book.data.bookFinded);
             console.log(singleBook.data.bookFinded)
             if (Book.data) {
