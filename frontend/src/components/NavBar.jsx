@@ -1,14 +1,19 @@
 
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Login from './Login';
 import { useAuth } from './ContextApi'
 import Toast from 'react-hot-toast'
+import { useId } from './ContextApi';
 
 function NavBar() {
+    const navigate = useNavigate();
+    const [Id, setId] = useId();
     const [Auth, setAuth] = useAuth();
     const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light');
     const element = document.documentElement;
+    let id = localStorage.getItem('userId')
+    setId(id)
     useEffect(() => {
         if (theme === 'dark') {
             element.classList.add('dark');
@@ -42,6 +47,9 @@ function NavBar() {
                 <Link to="/">Home</Link>
             </li>
             <li>
+                <Link to={`/book/create/${Id}`}>Create Book</Link>
+            </li>
+            <li>
                 <Link to="/course">Course</Link>
             </li>
             <li>
@@ -55,11 +63,15 @@ function NavBar() {
     const handleLogin = () => {
         document.getElementById('my_modal_3').showModal();
     }
-    console.log(Auth)
     const handleLogout = () => {
         setAuth(undefined);
+        setId(undefined);
         localStorage.removeItem('AuthToken');
+        localStorage.removeItem('userId');
         Toast.success('Logged Out!')
+    }
+    const handleProfile = () => {
+        navigate(`/show/${Id}`)
     }
     return (
         <>
@@ -138,12 +150,19 @@ function NavBar() {
                         </div>
                         {
                             Auth ?
-                                <div onClick={handleLogout}>
-                                    <Link className="text-white bg-red-600 px-3 py-2 rounded-md hover:bg-red-700 duration-300 cursor-pointer"
-                                    >
-                                        Logout
-                                    </Link>
-                                </div>
+                                <>
+                                    <div className="avatar online" onClick={handleProfile}>
+                                        <div className="w-12 rounded-full cursor-pointer">
+                                            <img src="https://img.freepik.com/premium-vector/drawing-man-with-brown-hair-blue-shirt-with-pink-green-background_968517-196100.jpg?w=740" />
+                                        </div>
+                                    </div>
+                                    <div onClick={handleLogout}>
+                                        <Link className="text-white bg-red-600 px-3 py-2 rounded-md hover:bg-red-700 duration-300 cursor-pointer"
+                                        >
+                                            Logout
+                                        </Link>
+                                    </div>
+                                </>
                                 :
                                 <>  <div onClick={handleLogin}>
                                     <a className="text-white bg-black px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer">Login</a>

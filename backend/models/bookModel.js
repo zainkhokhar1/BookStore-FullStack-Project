@@ -1,6 +1,6 @@
 
-import mongoose from "mongoose";
-
+import mongoose, { mongo } from "mongoose";
+const Schema = mongoose.Schema;
 const bookSchema = mongoose.Schema({
     name: {
         type: String,
@@ -12,7 +12,8 @@ const bookSchema = mongoose.Schema({
     },
     category: {
         type: String,
-        required: true
+        required: true,
+        enum: ["Free", "Entertainment", "Motivative", "Study", "Gaming", "Religious"]
     },
     image: {
         type: String,
@@ -21,6 +22,9 @@ const bookSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
+    },
+    creator: {
+        type: Schema.Types.ObjectId, ref: 'User',
     }
 })
 

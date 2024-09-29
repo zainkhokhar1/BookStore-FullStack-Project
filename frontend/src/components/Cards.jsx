@@ -1,15 +1,18 @@
 
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useId, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Cards({ singleBook }) {
-
+    let Navigate = useNavigate();
+    const handleSingleBook = () => {
+        Navigate(`/book/${singleBook._id}`)
+    }
     return (
         <>
-            <div className='mt-12 mb-8'>
+            <div className='mt-12 mb-8' onClick={handleSingleBook}>
                 <div className=" card bg-base-100 w-92 mx-2 shadow-xl hover:scale-105 duration-200 dark:bg-slate-900 dark:text-white dark:border">
                     <figure>
-                        <img className='w-auto'
+                        <img className='w-lvw object-cover h-72'
                             src={singleBook.image}
                             alt="Book" />
                     </figure>

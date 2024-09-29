@@ -1,12 +1,13 @@
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import axios from 'axios'
 import Toast from 'react-hot-toast'
-import { useAuth } from './ContextApi'
+import { useAuth, useId } from './ContextApi'
 
 function Login() {
-    const [Authorize, useAuthorize] = useAuth();
+    const [Authorize, setAuthorize] = useAuth();
+    const [Id, setId] = useId();
     const {
         register,
         handleSubmit,
@@ -18,8 +19,12 @@ function Login() {
             let userFinded = await axios.post('http://localhost:4001/user/login', data);
             if (userFinded.data) {
                 let AuthToken = userFinded.data.AuthToken;
-                useAuthorize(AuthToken);
+                setAuthorize(AuthToken);
+                console.log(userFinded.data.id)
                 localStorage.setItem('AuthToken', AuthToken);
+                let id = userFinded.data.id;
+                localStorage.setItem('userId',id)
+                setId(id)
                 Toast.success(userFinded.data.success, {
                     duration: 3000,
                     position: 'top-center',
@@ -31,6 +36,7 @@ function Login() {
 
         }
     }
+
     return (
         <>
             <div>

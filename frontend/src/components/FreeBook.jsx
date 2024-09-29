@@ -68,7 +68,7 @@ function FreeBook() {
                     <Slider {...settings}>
                         {
                             freeBook.map((singleBook) => {
-                                return <Cards singleBook={singleBook} key={singleBook.id} />
+                                return <Cards singleBook={singleBook} key={singleBook._id} />
                             })
                         }
                     </Slider>

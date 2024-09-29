@@ -7,6 +7,7 @@ const port = process.env.PORT || 4000
 import bookRoute from './Routes/BookRoute.js'
 import cors from 'cors'
 import UserRoute from './Routes/UserRoute.js'
+import ProfileRoute from './Routes/UserProfile.js'
 ///////////////// Connecting to MongoDB ////////////////
 
 app.use(express.urlencoded({ extended: true }));
@@ -33,8 +34,9 @@ app.use(cors());
 //-------------Defining routes ------------//////////////
 
 app.use('/book', bookRoute);
-
 app.use('/user', UserRoute)
+
+app.use('/show', ProfileRoute);
 
 
 app.listen(port, () => {
