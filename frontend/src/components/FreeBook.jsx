@@ -10,7 +10,7 @@ function FreeBook() {
     const [freeBook, setFreeBook] = useState([]);
     useEffect(() => {
         const fetchBooks = async () => {
-            let books = await axios.get('http://localhost:4001/book');
+            let books = await axios.get('https://bookstore-fullstack-project.onrender.com/book');
             console.log(books.data)
             let freeBooks = books.data.filter((singleData) => {
                 return singleData.category === 'Free';
