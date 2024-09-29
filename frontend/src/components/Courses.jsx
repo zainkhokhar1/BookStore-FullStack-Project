@@ -9,7 +9,7 @@ function courses() {
 
         const getBook = async () => {
             try {
-                const res = await axios.get('https://bookstore-fullstack-project.onrender.com/book');
+                const res = await axios.get('http://localhost:4001/book');
                 setBook(res.data);
             } catch (e) {
                 console.log(e.message)

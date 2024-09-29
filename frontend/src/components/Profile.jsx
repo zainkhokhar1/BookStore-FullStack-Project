@@ -10,7 +10,7 @@ function Profile() {
   let [Id] = useId();
   const FetchData = async () => {
     try {
-      let UserDetails = await axios.get(`https://bookstore-fullstack-project.onrender.com/show/${Id}`)
+      let UserDetails = await axios.get(`http://localhost:4001/show/${Id}`)
       UserDetails = UserDetails.data.userCredentials;
       setData(UserDetails[0])
       if (UserDetails) {

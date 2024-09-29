@@ -25,7 +25,7 @@ function Signup() {
     const onSubmit = async (data) => {
         console.log(data)
         try {
-            const resSignup = await axios.post('https://bookstore-fullstack-project.onrender.com/user/signup', data);
+            const resSignup = await axios.post('http://localhost:4001/user/signup', data);
             console.log(resSignup.data.success);
             if (resSignup.data) {
                 Toast.success('Successfully SignUp')
