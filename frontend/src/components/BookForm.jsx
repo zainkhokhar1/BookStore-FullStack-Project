@@ -5,11 +5,13 @@ import Footer from '../components/Footer.jsx'
 import { useForm } from "react-hook-form"
 import axios from 'axios'
 import Toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function BookForm() {
     const navigate = useNavigate();
-    let Id = localStorage.getItem('UserId');
+    const RouteParams = useParams();
+    let Id = RouteParams.id;
+    console.log(Id)
     const {
         register,
         handleSubmit,
